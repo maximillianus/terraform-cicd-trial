@@ -1,0 +1,33 @@
+name: Terraform CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  first-tf-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.10.3 # Replace with the version you're using
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Validate Terraform
+        run: terraform validate
+
+      - name: Plan Terraform
+        run: terraform plan
+
+      - name: Apply Terraform
+        if: github.ref == 'refs/heads/main' # only run when changes are pushed to main branch
+        run: terraform apply -auto-approve
