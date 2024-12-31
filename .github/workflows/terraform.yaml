@@ -96,12 +96,12 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: us-east-1
 
-       - name: Initialize Terraform
-         run: terraform init
+      - name: Initialize Terraform
+        run: terraform init
 
-       - name: Validate Terraform
-         run: terraform validate
+      - name: Validate Terraform
+        run: terraform validate
 
-       - name: Plan Terraform
-         run: terraform plan
+      - name: Plan Terraform
+        run: terraform plan
       
