@@ -4,16 +4,55 @@ on:
   push:
     branches:
       - main
-  pull_request:
+  workflow_dispatch:
+
+# jobs:
+#   first-tf-job:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v3
+      
+#       - name: Set up AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v2
+#         with:
+#           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+#           aws-region: ${{ secrets.AWS_REGION }}
+
+#       - name: Set up Terraform
+#         uses: hashicorp/setup-terraform@v2
+#         with:
+#           terraform_version: 1.10.3 # Replace with the version you're using
+
+#       - name: Initialize Terraform
+#         run: terraform init
+
+#       - name: Validate Terraform
+#         run: terraform validate
+
+#       - name: Plan Terraform
+#         run: terraform plan
+
+#       - name: Apply Terraform
+#         if: github.ref == 'refs/heads/main' # only run when changes are pushed to main branch
+#         run: terraform apply -auto-approve
 
 jobs:
-  first-tf-job:
+  init:
+    name: initialize
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.10.3
+
       - name: Set up AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -22,20 +61,47 @@ jobs:
           aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-          terraform_version: 1.10.3 # Replace with the version you're using
-
       - name: Initialize Terraform
         run: terraform init
 
-      - name: Validate Terraform
-        run: terraform validate
+  wait_for_approval:
+    name: Wait for Approval
+    needs: build
+    runs-on: ubuntu-latest
 
-      - name: Plan Terraform
-        run: terraform plan
+    steps:
+      - name: Pause for Approval
+        run: |
+          echo "Awaiting manual approval. Approve the workflow to continue."
+        # This acts as a pause; GitHub UI provides approval in the Actions tab.
+  plan:
+    name: Plan Terraform Resources
+    needs: wait_for_approval
+    runs-on: ubuntu-latest
 
-      - name: Apply Terraform
-        if: github.ref == 'refs/heads/main' # only run when changes are pushed to main branch
-        run: terraform apply -auto-approve
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.10.3
+
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: us-east-1
+
+       - name: Initialize Terraform
+         run: terraform init
+
+       - name: Validate Terraform
+         run: terraform validate
+
+       - name: Plan Terraform
+         run: terraform plan
+      
