@@ -73,6 +73,7 @@ jobs:
       - name: Pause for Approval
         uses: trstringer/manual-approval@v1
         with:
+          secret: ${{ github.TOKEN }}
           approvers: maximillianus
           minimum-approvals: 1
           issue-title: "Testing manual approval"
