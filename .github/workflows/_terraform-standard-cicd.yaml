@@ -1,0 +1,45 @@
+# This github-action file runs standard Terraform CI/CD pipeline
+# It takes AWS credentials from Github Secrets
+# This CI/CD pipeline does not store state file anywhere and finishes at
+# infrastructure creation. So there is no way to destroy the infra using terraform
+
+name: Terraform CI/CD without state
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  standard-tf-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.10.3 # Replace with the version you're using
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Validate Terraform
+        run: terraform validate
+
+      - name: Plan Terraform
+        run: terraform plan
+
+      - name: Apply Terraform
+        if: github.ref == 'refs/heads/main' # only run when changes are pushed to main branch
+        run: terraform apply -auto-approve
+
