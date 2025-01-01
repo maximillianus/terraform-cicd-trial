@@ -71,9 +71,16 @@ jobs:
 
     steps:
       - name: Pause for Approval
-        run: |
-          echo "Awaiting manual approval. Approve the workflow to continue."
-        # This acts as a pause; GitHub UI provides approval in the Actions tab.
+        uses: trstringer/manual-approval@v1
+        with:
+          approvers: maximillianus
+          minimum-approvals: 1
+          issue-title: "Testing manual approval"
+          issue-body: |
+            Please approve or deny. 
+            Approval Keywords: approve, approved, lgtm, yes. 
+            Denial Keywords: deny, denied, no
+
   plan:
     name: Plan Terraform Resources
     needs: wait_for_approval
