@@ -12,9 +12,12 @@ We will be exploring ways to do this:
 
 2. Using Github actions and HCP terraform
    1. This can be done in 2 ways: 
-      1. Using HCP Terraform as state backend only
-      2. Using HCP Terraform to store state and runs the infrastructure creation, thus keeping Github only for version control
+      1. Using HCP Terraform as state backend only - refer to `.github/inactive-workflows/hcp-terraform-backend-cicd.yaml`
+      2. Using HCP Terraform to store state and runs the infrastructure creation, thus keeping Github only for version control - refer to `.github/inactive-workflows/hcp-terraform-cicd.yaml`
    2. Both ways require storing HCP Terraform API Token in Github
+   3. Using HCP Terraform as state backend and as infrastructure management is similar. Some differences:
+      1. The way log looks in HCP Terraform UI is different 
+      2. For infrastructure provisioning, HCP Terraform as state backend only store state and doesn't utilize stored API key while HCP Terraform as infra management utilize stored infra API Key (or OIDC) to creates infrastructure
 
 Additional Note:
 1. If we want to **pause** or do **manual approval**, Github Actions can do this through 2 ways: `Environment` and extension `trstringer/manual-approval`.
