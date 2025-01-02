@@ -22,7 +22,8 @@ jobs:
       
       - name: Setup Backend Config
         run: |
-          echo "${{ secrets.TF_HCP_TERRAFORM_BACKEND }}" > config.remote.tfbackend
+          echo "${{ env.TF_HCP_TERRAFORM_BACKEND }}" > config.remote.tfbackend
+          cat config.remote.tfbackend
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
