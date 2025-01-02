@@ -19,7 +19,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: GithubAction_DynamicCredentialsRole
+          role-to-assume: ${{ secrets.AWS_OIDC_ROLE_ARN }}
           role-session-name: github-aws-oidc-role
           aws-region: ${{ secrets.AWS_REGION }}
       # Upload a file to AWS s3
