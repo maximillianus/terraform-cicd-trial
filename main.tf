@@ -29,7 +29,7 @@ resource "terraform_data" "run-script" {
     command = "${path.module}/hello.sh"
   }
 
-  
+
 }
 
 # provider "aws" {
