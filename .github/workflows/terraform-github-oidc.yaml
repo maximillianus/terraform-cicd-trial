@@ -25,4 +25,4 @@ jobs:
       # Upload a file to AWS s3
       - name: List 5 S3 buckets
         run: |
-          aws s3 ls --max-items 5
+          aws s3api list-buckets --query "Buckets[0:2].Name" --output json
