@@ -5,10 +5,10 @@ on:
     branches:
       - main
   pull_request:
-# env:
+env:
   # Uses Github Secrets for HCP Terraform Cloud for privacy
-  # TF_CLOUD_ORGANIZATION: ${{ secrets.TF_CLOUD_ORGANIZATION }}
-  # TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
+  TF_CLOUD_ORGANIZATION: ${{ secrets.TF_CLOUD_ORGANIZATION }}
+  TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
 
 jobs:
   terraform:
@@ -37,8 +37,11 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init -backend-config=config.remote.tfbackend
-      
+        run: |
+          terraform init \
+            -backend-config="workspace=${{env.TF_WORKSPACE}}" \
+            -backend-config="organization=${{env.TF_CLOUD_ORGANIZATION}}" \
+
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
