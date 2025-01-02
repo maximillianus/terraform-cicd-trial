@@ -7,8 +7,8 @@ on:
   pull_request:
 env:
   # Uses Github Secrets for HCP Terraform Cloud for privacy
-  TF_CLOUD_ORGANIZATION: ${{ secrets.TF_CLOUD_ORGANIZATION }}
-  TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
+  # TF_CLOUD_ORGANIZATION: ${{ secrets.TF_CLOUD_ORGANIZATION }}
+  # TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
 
 jobs:
   terraform:
