@@ -14,8 +14,6 @@ jobs:
   plan:
     name: terraform plan
     runs-on: ubuntu-latest
-    permissions:
-      issues: read
     environment:
       name: release
     steps:
