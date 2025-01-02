@@ -5,10 +5,10 @@ on:
     branches:
       - main
   pull_request:
-env:
+# env:
   # Uses Github Secrets for HCP Terraform Cloud for privacy
-  TF_CLOUD_ORGANIZATION: ${{ secrets.TF_CLOUD_ORGANIZATION }}
-  TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
+  # TF_CLOUD_ORGANIZATION: ${{ secrets.TF_CLOUD_ORGANIZATION }}
+  # TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
 
 jobs:
   terraform:
@@ -23,12 +23,15 @@ jobs:
       - name: Setup Backend Config
         run: |
           cat <<EOF > config.remote.tfbackend
-          organization="${{ env.TF_CLOUD_ORGANIZATION}}"
-          workspaces { prefix = "${{ env.TF_WORKSPACE}}" }
+          organization="${{ secrets.TF_CLOUD_ORGANIZATION}}"
+          workspaces { name = "${{ secrets.TF_WORKSPACE}}" }
           EOF
         # Here I am changing from `workspaces.name` to `workspaces.prefix`
         # When env var TF_WORKSPACE is present, looks like Terraform backend is detecting multiple
         # workspaces and causing issue "workspace is not supported"
+
+        # Alternatively, disable env var TF_WORKSPACE and TF_CLOUD_ORGANIZATION and refer to 
+        # workspace and organization from secrets
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
