@@ -1,14 +1,14 @@
-# # Without HCP Terraform
-# terraform {
-#   required_version = "1.10.3"
+# Without HCP Terraform
+terraform {
+  required_version = "1.10.3"
 
-#   required_providers {
-#     aws = {
-#       source  = "hashicorp/aws"
-#       version = "5.82.2"
-#     }
-#   }
-# }
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "5.82.2"
+    }
+  }
+}
 
 # # With HCP Terraform
 # terraform {
@@ -24,19 +24,19 @@
 #   cloud {}
 # }
 
-# With HCP Terraform as state backend
-terraform {
-  required_version = "1.10.3"
+# # With HCP Terraform as state backend
+# terraform {
+#   required_version = "1.10.3"
 
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "5.82.2"
-    }
-  }
+#   required_providers {
+#     aws = {
+#       source  = "hashicorp/aws"
+#       version = "5.82.2"
+#     }
+#   }
 
-  backend "remote" {}
-}
+#   backend "remote" {}
+# }
 
 resource "terraform_data" "run-script" {
   provisioner "local-exec" {
