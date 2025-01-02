@@ -23,8 +23,8 @@ jobs:
       - name: Setup Backend Config
         run: |
           cat <<EOF > config.remote.tfbackend
-          organization="${{ env.TF_CLOUD_ORGANIZATION}}""
-          workspaces {name = "${{ env.TF_CLOUD_ORGANIZATION}}""}
+          organization="${{ env.TF_CLOUD_ORGANIZATION}}"
+          workspaces {name = "${{ env.TF_CLOUD_ORGANIZATION}}"}
           EOF
 
 
