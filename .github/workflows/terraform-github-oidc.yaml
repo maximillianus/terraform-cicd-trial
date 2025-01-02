@@ -1,5 +1,6 @@
 # Sample Terraform CI/CD using Github OIDC Token for AWS permission
 name: Terraform CI/CD with Github OIDC Token
+run-name: Github OIDC Test
 on:
   push:
     branches:

@@ -20,7 +20,7 @@ provider "aws" {
 
 resource "aws_instance" "gh-action-instance" {
   ami           = "ami-04c913012f8977029" # Replace with a valid AMI ID in your region
-  instance_type = "t2.micro"
+  instance_type = "t3a.nano"
 
   tags = {
     Name = "ec2-github-action-test"
