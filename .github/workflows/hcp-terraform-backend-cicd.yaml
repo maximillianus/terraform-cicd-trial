@@ -24,8 +24,9 @@ jobs:
         run: |
           cat <<EOF > config.remote.tfbackend
           organization="${{ env.TF_CLOUD_ORGANIZATION}}"
-          workspaces {name = "${{ env.TF_WORKSPACE}}"}
+          workspaces { name = "${{ env.TF_WORKSPACE}}" }
           EOF
+          unset TF_WORKSPACE
 
 
       - name: Setup Terraform
