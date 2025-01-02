@@ -22,8 +22,11 @@ jobs:
       
       - name: Setup Backend Config
         run: |
-          echo "${{ vars.TF_HCP_TERRAFORM_BACKEND }}" > config.remote.tfbackend
-          cat config.remote.tfbackend
+          cat <<EOF > config.remote.tfbackend
+          organization="${{ env.TF_CLOUD_ORGANIZATION}}""
+          workspaces {name = "${{ env.TF_CLOUD_ORGANIZATION}}""}
+          EOF
+
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
@@ -38,9 +41,7 @@ jobs:
       - name: Terraform Init
         id: init
         run: |
-          terraform init \
-            -backend-config="workspaces.name=${{env.TF_WORKSPACE}}" \
-            -backend-config="organization=${{env.TF_CLOUD_ORGANIZATION}}" \
+          terraform init -backend-config=config.remote.tfbackend
 
       - name: Terraform Validate
         id: validate
