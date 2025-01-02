@@ -19,6 +19,9 @@ jobs:
       # adding environment ruins standard OIDC setup
       # Ensure to use StringLike instead of StringEquals in repo-branch reference
       # ie. repo:<GitHubOrg>/<GitHubRepo>:ref:refs/heads/<GitHubBranch>
+      # Also add 2 Git Format lines for environment-managed and regular in Trust Relationship:
+      # repo:<repo-org/owner>/<repo-name>:ref:refs/heads/<branch-name>
+      # repo:<repo-org/owner>/<repo-name>:environment:<environment-name>
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

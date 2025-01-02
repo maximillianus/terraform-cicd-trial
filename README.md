@@ -19,6 +19,6 @@ We will be exploring ways to do this:
 Additional Note:
 1. If we want to **pause** or do **manual approval**, Github Actions can do this through 2 ways: `Environment` and extension `trstringer/manual-approval`.
 2. Have tested the `trstringer/manual-approval` method. It requires **github token** and **permissions to write issues** to work.
-3. Need to test the `Environment` method
-4. Can multiple jobs be defined in 1 workflow without requiring to initialize another machine? Looks like this can be done with `container` component but need to test.
-5. We can use Github OIDC to issue short-lived token access key and avoiding long-term API access keys 
+3. `Environment` has been tested and works at `job`-level and not at `steps` level. Meaning that to get the approval flow, different runner's environment needs to be bootstrapped.
+4. Can multiple jobs be defined in 1 workflow and 1 runner so we can skip initialization? Looks like this can be done with `container` component but need to test.
+5. We can use Github OIDC to issue short-lived token access key and avoiding long-term API access keys. Ensure to configure trust relationship for both regular and environment-managed workflows.
