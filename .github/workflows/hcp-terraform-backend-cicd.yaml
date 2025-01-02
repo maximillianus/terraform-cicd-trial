@@ -8,7 +8,7 @@ on:
 env:
   # Uses Github Secrets for HCP Terraform Cloud for privacy
   TF_CLOUD_ORGANIZATION: ${{ secrets.TF_CLOUD_ORGANIZATION }}
-  TF_WORKSPACE: ${{ secrets.TF_WORKSPACE }}
+  TF_MYWORKSPACE: ${{ secrets.TF_WORKSPACE }}
 
 jobs:
   terraform:
@@ -24,9 +24,8 @@ jobs:
         run: |
           cat <<EOF > config.remote.tfbackend
           organization="${{ env.TF_CLOUD_ORGANIZATION}}"
-          workspaces { name = "${{ env.TF_WORKSPACE}}" }
+          workspaces { name = "${{ env.TF_MYWORKSPACE}}" }
           EOF
-          unset TF_WORKSPACE
 
 
       - name: Setup Terraform
