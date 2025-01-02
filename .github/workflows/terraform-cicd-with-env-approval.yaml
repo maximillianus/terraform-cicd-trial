@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: release
+      # adding environment ruins standard OIDC setup
+      # Ensure to use StringLike instead of StringEquals in repo-branch reference
+      # ie. repo:<GitHubOrg>/<GitHubRepo>:ref:refs/heads/<GitHubBranch>
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
