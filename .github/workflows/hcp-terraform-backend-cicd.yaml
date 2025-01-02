@@ -22,7 +22,7 @@ jobs:
       
       - name: Setup Backend Config
         run: |
-          echo "${{ env.TF_HCP_TERRAFORM_BACKEND }}" > config.remote.tfbackend
+          echo "${{ vars.TF_HCP_TERRAFORM_BACKEND }}" > config.remote.tfbackend
           cat config.remote.tfbackend
 
       - name: Setup Terraform
