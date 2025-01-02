@@ -21,10 +21,10 @@
 #     }
 #   }
 
-#   cloud { }
+#   cloud {}
 # }
 
-# With HCP Terraform
+# With HCP Terraform as state backend
 terraform {
   required_version = "1.10.3"
 
